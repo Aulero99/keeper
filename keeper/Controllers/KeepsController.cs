@@ -66,6 +66,7 @@ public class KeepsController : Controller
                 Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
                 data.CreatorId = userInfo.Id;
                 data.Id = keepId;
+                data.Creator = userInfo;
                 Keep keep = _ks.Edit(data);
                 return Ok(keep);   
             }

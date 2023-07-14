@@ -20,7 +20,7 @@ namespace keeper.Services
         internal Keep Edit(Keep data)
         {
             Keep original = _repo.GetKeepById(data.Id);
-            if(original.CreatorId != data.CreatorId) throw new Exception("Unauthorized: cannot edit this keep.");
+            if(original.CreatorId != data.CreatorId) throw new Exception("Unauthorized: Cannot edit this keep.");
 
             data.Description = data.Description != null ? data.Description : original.Description;
             data.Img = data.Img != null ? data.Img : original.Img;
@@ -46,8 +46,7 @@ namespace keeper.Services
 
         internal Keep PostNewKeep(Keep data)
         {
-            Keep keep = _repo.PostNewKeep(data);
-            return keep;
+            return _repo.PostNewKeep(data);
         }
     }
 }
