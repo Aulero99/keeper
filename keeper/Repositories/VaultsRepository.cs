@@ -9,6 +9,17 @@ namespace keeper.Repositories
             _db = db;
         }
 
+        internal int Delete(int vaultId)
+        {
+            string sql = @"
+            DELETE FROM vaults
+            WHERE id = @vaultId
+            LIMIT 1
+            ;";
+            int rows = _db.Execute(sql, new{vaultId});
+            return rows;
+        }
+
         internal Vault Edit(Vault data)
 {
             string sql = @"

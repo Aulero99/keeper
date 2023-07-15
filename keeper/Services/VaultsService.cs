@@ -9,6 +9,14 @@ namespace keeper.Services
             _repo = repo;
         }
 
+        internal void Delete(int vaultId, string id)
+        {
+            Vault original = _repo.GetVaultById(vaultId);
+            if(original.CreatorId != id) throw new Exception("Unauthorized: Cannot delete this vault.");
+            int rows = _repo.Delete(vaultId);
+            if (rows > 1) throw new Exception($"Error: {rows} rows were deleted instead of 1.");
+        }
+
         internal Vault Edit(Vault data)
         {
             Vault original = _repo.GetVaultById(data.Id);
