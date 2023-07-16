@@ -22,7 +22,7 @@ namespace keeper.Repositories
             return rows;
         }
 
-        internal List<VaultedKeep> GetKeepsFromVault(int vaultId, Vault vault)
+        internal List<VaultedKeep> GetKeepsFromVault(int vaultId)
         {
 
             string sql = @"

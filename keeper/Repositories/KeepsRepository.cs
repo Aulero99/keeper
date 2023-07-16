@@ -59,12 +59,13 @@ namespace keeper.Repositories
             string sql = @"
             SELECT 
             k.*, 
-            a.*,
-            COUNT(v.id) AS Kept
+            COUNT(v.id) AS Kept,
+            a.*
             FROM keeps k 
-            JOIN accounts a ON a.id = k.CreatorId
             LEFT JOIN vaultKeeps v ON v.keepId = k.id
+            LEFT JOIN accounts a ON k.CreatorId = a.id
             WHERE k.id = @Id
+            GROUP BY (k.id)
             ;";
             
             return _db.Query<Keep, Profile, Keep>(sql,(k,p)=>{

@@ -21,8 +21,7 @@ namespace keeper.Services
 
         internal List<VaultedKeep> GetKeepsFromVault(int vaultId, string id)
         {
-            Vault vault = _vs.GetVaultById(vaultId, id);
-            var keeps = _repo.GetKeepsFromVault(vaultId, vault);
+            var keeps = _repo.GetKeepsFromVault(vaultId);
             return keeps;
         }
 

@@ -91,11 +91,27 @@ public class VaultsController : Controller
     }
 
     [HttpGet("{vaultId}/keeps")]
-    [Authorize]
     public async Task<ActionResult<List<VaultedKeep>>> GetKeepsInVault(int vaultId)
     {
-        Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
-        var keeps = _vks.GetKeepsFromVault(vaultId, userInfo.Id);
-        return Ok(keeps);
+        try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                if(userInfo == null)
+                {
+                    var vault = _vs.GetVaultById(vaultId, "none");
+                    var keeps = _vks.GetKeepsFromVault(vaultId, "none");
+                    return Ok(keeps);
+                }
+                else
+                {
+                    Vault vault = _vs.GetVaultById(vaultId, userInfo.Id);   
+                    var keeps = _vks.GetKeepsFromVault(vaultId, userInfo.Id);
+                    return Ok(keeps);
+                }   
+            }
+        catch (Exception e)
+            {
+              return BadRequest(e.Message);
+            }
     }
 }
