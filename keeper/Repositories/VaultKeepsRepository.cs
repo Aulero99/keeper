@@ -3,15 +3,57 @@ namespace keeper.Repositories
     public class VaultKeepsRepository
     {
         private readonly IDbConnection _db;
-        private readonly KeepsRepository _krepo;
+        private readonly KeepsRepository _kr;
 
-        public VaultKeepsRepository(IDbConnection db, KeepsRepository krepo)
+        public VaultKeepsRepository(IDbConnection db, KeepsRepository kr)
         {
             _db = db;
-            _krepo = krepo;
+            _kr = kr;
+        }
+
+        internal int Delete(int Id)
+        {
+            string sql = @"
+            DELETE FROM vaultKeeps
+            WHERE id = @Id
+            LIMIT 1
+            ;";
+            int rows = _db.Execute(sql, new{Id});
+            return rows;
+        }
+
+        internal List<VaultedKeep> GetKeepsFromVault(int vaultId, Vault vault)
+        {
+
+            string sql = @"
+            SELECT 
+            vk.*,
+            k.*,
+            a.*
+            FROM vaultKeeps     AS vk
+            JOIN keeps          AS k ON k.id = vk.KeepId
+            JOIN accounts       AS a on a.id = k.CreatorId
+            WHERE vk.VaultId = @vaultId
+            ;";
+
+            List<VaultedKeep> keeps = _db.Query<VaultKeep, VaultedKeep, Profile, VaultedKeep>(sql, (vk,k, p)=>{
+                k.VaultKeepId = vk.Id;
+                k.Creator = p;
+                return k;
+            }, new{vaultId}).ToList();
+            return keeps;
+        }
+
+        internal VaultKeep GetVaultKeepById(int Id)
+        {
+            string sql = @"
+            SELECT * FROM vaultKeeps vk WHERE vk.id = @Id 
+            ;";
+            return _db.Query<VaultKeep>(sql, new{Id}).FirstOrDefault();
         }
 
         internal VaultKeep Post(VaultKeep data)
+        // TODO this may not return fully valid data, test it out later
         {
             string sql = @"
             INSERT INTO vaultKeeps
@@ -20,26 +62,13 @@ namespace keeper.Repositories
             (@CreatorId, @VaultId, @KeepId);
             
             SELECT 
-            vk.*, 
-            a.*,
-            v.*,
-            k.*
-            FROM vaultKeeps vk 
-            JOIN accounts a ON a.id = vk.CreatorId
-            JOIN vaults v ON v.id = vk.VaultId
-            JOIN keeps k ON k.id = vk.KeepId
+            vk.*
+            FROM vaultKeeps vk
             WHERE vk.id = LAST_INSERT_ID()
             ;";
 
-            VaultKeep vk = _db.Query<VaultKeep, Profile, Vault, Keep, VaultKeep>(sql, (vk,p,v,k)=>{
-                vk.Creator = p;
-                vk.Keep = k;
-                vk.Vault = v;
-                vk.Vault.Creator = p;
-                vk.Keep.Creator = p;
-                return vk;
-            }, data).FirstOrDefault();
-            vk.Keep = _krepo.GetKeepById(vk.KeepId);
+            VaultKeep vk = _db.Query<VaultKeep>(sql, data).FirstOrDefault();
+            // vk.Keep = _kr.GetKeepById(vk.KeepId);
             return vk;
         }
     }

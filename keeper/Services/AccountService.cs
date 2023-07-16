@@ -31,4 +31,10 @@ public class AccountService
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
     return _repo.Edit(original);
   }
+
+    internal Profile GetUserProfileById(string profileId)
+    {
+        var profile = _repo.GetProfileById(profileId);
+        return profile;
+    }
 }

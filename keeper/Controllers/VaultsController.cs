@@ -5,11 +5,13 @@ public class VaultsController : Controller
 {
     private readonly VaultsService _vs;
     private readonly Auth0Provider _auth;
+    private readonly VaultKeepsService _vks;
 
-    public VaultsController(VaultsService vs, Auth0Provider auth)
+    public VaultsController(VaultsService vs, Auth0Provider auth, VaultKeepsService vks)
     {
         _vs = vs;
         _auth = auth;
+        _vks = vks;
     }
 
     [HttpPost]
@@ -79,5 +81,14 @@ public class VaultsController : Controller
             {
               return BadRequest(e.Message);
             }
+    }
+
+    [HttpGet("{vaultId}/keeps")]
+    [Authorize]
+    public async Task<ActionResult<List<VaultedKeep>>> GetKeepsInVault(int vaultId)
+    {
+        Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+        var keeps = _vks.GetKeepsFromVault(vaultId, userInfo.Id);
+        return Ok(keeps);
     }
 }

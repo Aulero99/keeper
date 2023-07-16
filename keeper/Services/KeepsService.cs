@@ -44,6 +44,11 @@ namespace keeper.Services
             return keep;
         }
 
+        internal object GetKeepsByCreatorId(string profileId)
+        {
+            return _repo.GetKeepsByCreatorId(profileId);
+        }
+
         internal Keep PostNewKeep(Keep data)
         {
             return _repo.PostNewKeep(data);

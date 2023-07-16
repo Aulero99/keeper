@@ -1,6 +1,6 @@
 namespace keeper.Models
 {
-    public class Vault
+    public class VaultBase
     {
         public int Id { get; set; }
         public string CreatorId { get; set; }
@@ -10,7 +10,11 @@ namespace keeper.Models
         public string Description { get; set; }
         public string Img { get; set; }
         public bool? IsPrivate { get; set; }
-        public Profile Creator { get; set; }
 
+    }
+
+    public class Vault : VaultBase
+    {
+        public Profile Creator { get; set; }
     }
 }

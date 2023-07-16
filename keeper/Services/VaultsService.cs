@@ -30,12 +30,22 @@ namespace keeper.Services
             return _repo.Edit(data);
         }
 
+        internal object GetNonPrivateVaultsByCreatorId(string profileId)
+        {
+            return _repo.getNonPrivateVaultsByCreatorId(profileId);
+        }
+
         internal Vault GetVaultById(int vaultId, string id)
         {
             Vault vault = _repo.GetVaultById(vaultId);
             if(vault.Name == null) throw new Exception($"No vault id:{vaultId} found.");
             if(vault.IsPrivate == true && vault.CreatorId != id) throw new Exception($"Vault id {vaultId} is private, and you do not have permission for access.");
             return vault;
+        }
+
+        internal ActionResult<List<VaultBase>> GetVaultsByUserId(string Id)
+        {
+            return _repo.GetVaultsByCreatorId(Id);
         }
 
         internal Vault PostNewVault(Vault data)

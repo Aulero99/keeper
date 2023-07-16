@@ -35,6 +35,18 @@ namespace keeper.Repositories
             return data;
         }
 
+        internal object getNonPrivateVaultsByCreatorId(string Id)
+        {
+            string sql = @"
+            SELECT 
+            v.*
+            FROM vaults v
+            WHERE v.creatorId = @Id && IsPrivate = 0
+            ;";
+
+            return _db.Query<VaultBase>(sql,new{Id}).ToList();
+        }
+
         internal Vault GetVaultById(int vaultId)
         {
             string sql = @"
@@ -50,6 +62,18 @@ namespace keeper.Repositories
                 v.Creator = p;
                 return v;
             }, new{vaultId}).FirstOrDefault();
+        }
+
+        internal ActionResult<List<VaultBase>> GetVaultsByCreatorId(string Id)
+        {
+            string sql = @"
+            SELECT 
+            v.*
+            FROM vaults v
+            WHERE v.creatorId = @Id
+            ;";
+
+            return _db.Query<VaultBase>(sql,new{Id}).ToList();
         }
 
         internal Vault PostNewVault(Vault data)

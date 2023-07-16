@@ -40,11 +40,11 @@ namespace keeper.Repositories
             string sql = @"
             SELECT 
             k.*, 
-            a.*,
-            COUNT(v.id) AS Kept
-            FROM keeps k 
-            JOIN accounts a ON a.id = k.CreatorId
+            COUNT(v.id) AS Kept,
+            a.*
+            FROM keeps k
             LEFT JOIN vaultKeeps v ON v.keepId = k.id
+            LEFT JOIN accounts a ON k.creatorId = a.id 
             GROUP BY (k.id)
             ;";
             
@@ -71,6 +71,26 @@ namespace keeper.Repositories
                 k.Creator = p;
                 return k;
             }, new{Id}).FirstOrDefault();
+        }
+
+        internal object GetKeepsByCreatorId(string Id)
+        {
+            string sql = @"
+            SELECT 
+            k.*, 
+            COUNT(v.id) AS Kept,
+            a.*
+            FROM keeps k
+            LEFT JOIN vaultKeeps v ON v.keepId = k.id
+            LEFT JOIN accounts a ON k.creatorId = a.id 
+            WHERE k.CreatorId = @Id
+            GROUP BY (k.id)
+            ;";
+            
+            return _db.Query<Keep, Profile, Keep>(sql,(k,p)=>{
+                k.Creator = p;
+                return k;
+            }, new{Id}).ToList();
         }
 
         internal Keep PostNewKeep(Keep data)
