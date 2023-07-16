@@ -33,13 +33,20 @@ public class VaultsController : Controller
     }
 
     [HttpGet("{vaultId}")]
-    [Authorize]
     public async Task<ActionResult<Vault>> GetVaultById(int vaultId){
         try
             {
                 Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
-                Vault result = _vs.GetVaultById(vaultId, userInfo.Id);
-                return new ActionResult<Vault>(Ok(result));
+                if(userInfo == null)
+                {
+                    Vault result = _vs.GetVaultById(vaultId, "none");
+                    return new ActionResult<Vault>(Ok(result));
+                }
+                else
+                {
+                    Vault result = _vs.GetVaultById(vaultId, userInfo.Id);
+                    return new ActionResult<Vault>(Ok(result));
+                }
        
             }
         catch (Exception e)
