@@ -35,12 +35,20 @@ select {
     }
   }
 }
-
 form:invalid button[type="submit"] {
   filter: grayscale(1);
   pointer-events: none;
 }
 
+
+:root {
+  --cs-white: #F9F6FA;
+  --cs-seashell: #FEF6F0;
+  --cs-lavender: #DED6E9;
+  --cs-rose: #E9D8D6;
+  --cs-dk-pink: #877A8F;
+  --cs-black: #2D2D2D;
+}
 .rubik{
   font-family: 'Rubik', sans-serif;
 }

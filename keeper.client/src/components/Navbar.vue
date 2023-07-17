@@ -9,11 +9,16 @@
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
+    <div class="d-flex flex-row" id="navbarText">
+      <ul class="navbar-nav me-auto d-flex flex-row">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
+          <router-link :to="{ name: 'Home' }" class="btn text-success lighten-30 selectable text-uppercase">
+            Home
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'Account' }" class="btn text-success lighten-30 selectable text-uppercase">
+            Account
           </router-link>
         </li>
       </ul>

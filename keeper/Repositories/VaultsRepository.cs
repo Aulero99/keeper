@@ -64,7 +64,7 @@ namespace keeper.Repositories
             }, new{vaultId}).FirstOrDefault();
         }
 
-        internal ActionResult<List<VaultBase>> GetVaultsByCreatorId(string Id)
+        internal List<VaultBase> GetVaultsByCreatorId(string Id)
         {
             string sql = @"
             SELECT 

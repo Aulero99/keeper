@@ -1,13 +1,25 @@
 <template>
+  
   <header>
     <Navbar />
   </header>
-  <main>
+  
+  <main class="container-fluid">
     <router-view />
   </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
+  
+  <footer class="m-3">
+    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#vaultModal" >Open Modal</button>
   </footer>
+  
+  <Modal id="keepModal">
+    <ModalKeep/>
+  </Modal>
+
+  <Modal id="vaultModal">
+    <ModalVault/>
+  </Modal>
+  
 </template>
 
 <script>

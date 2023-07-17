@@ -7,12 +7,14 @@ public class AccountController : ControllerBase
   private readonly AccountService _accountService;
   private readonly Auth0Provider _auth0Provider;
   private readonly VaultsService _vs;
+  private readonly KeepsService _ks;
 
-    public AccountController(AccountService accountService, Auth0Provider auth0Provider, VaultsService vs)
+    public AccountController(AccountService accountService, Auth0Provider auth0Provider, VaultsService vs, KeepsService ks)
     {
         _accountService = accountService;
         _auth0Provider = auth0Provider;
         _vs = vs;
+        _ks = ks;
     }
 
     [HttpGet]
@@ -46,4 +48,22 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
+  [HttpGet("keeps")]
+  [Authorize]
+    public async Task<ActionResult<List<Keep>>> GetMyKeeps()
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      var keeps = _ks.GetKeepsByCreatorId(userInfo.Id);
+      return Ok(keeps);
+
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+  
 }

@@ -21,7 +21,7 @@ public class VaultKeepsController : Controller
                 Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
                 data.CreatorId = userInfo.Id;
                 VaultKeep result = _vks.Post(data);
-                return new ActionResult<VaultKeep>(Ok(result));
+                return Ok(result);
             }
         catch (Exception e)
             {

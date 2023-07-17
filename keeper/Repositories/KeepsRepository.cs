@@ -74,7 +74,7 @@ namespace keeper.Repositories
             }, new{Id}).FirstOrDefault();
         }
 
-        internal object GetKeepsByCreatorId(string Id)
+        internal List<Keep> GetKeepsByCreatorId(string Id)
         {
             string sql = @"
             SELECT 
