@@ -12,6 +12,7 @@
         v-model="editable.name" 
         class="form-control" 
         name="name"
+        maxlength="35"
         :placeholder="account.name">
     </div>
 
@@ -21,15 +22,17 @@
         v-model="editable.picture" 
         class="form-control" 
         name="picture"
+        maxlength="255"
         :placeholder="account.picture">
     </div>
 
     <div class="form-group mb-3">
         <label for="coverImg">Cover Image</label>
-        <input type="text"
+        <input type="url"
         v-model="editable.coverImg" 
         class="form-control" 
         name="coverImg"
+        maxlength="255"
         :placeholder="account.coverImg">
     </div>
 
