@@ -30,10 +30,17 @@ class AccountService {
   async getVaultsByAccountId(){
     logger.log('getVaultsByAccountId()')
     const res = await api.get(MDI + '/vaults')
-    // logger.log(res.data)
+    logger.log(res.data)
     AppState.myVaults = res.data.map(v => new Vault(v))
     logger.log(AppState.vaults)
-}
+  }
+
+  async editAccount(data){
+    const res = await api.put('account', data)
+    logger.log(res.data)
+    AppState.account = new Account(res.data)
+    logger.log(AppState.account)
+  }
 }
 
 export const accountService = new AccountService()
