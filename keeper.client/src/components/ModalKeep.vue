@@ -1,30 +1,161 @@
 <template>
-          <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+  <div class="d-flex flex-sm-row flex-column overflow-hidden modal-content-container fill" v-if="keep">
+
+    <div class="modal-slot keep-img">
+      <img :src="keep.img" :alt="keep.name" :title="keep.name">
+    </div>
+
+    <div class="modal-slot keep-content d-flex flex-column">
+      <div class="head d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row fill-y">
+          <div class="views fill-y d-flex flex-row">
+            <i class="mdi mdi-eye" title="Views"></i>
+            {{ keep.views }} 
+          </div>
+          <div class="kept fill-y d-flex flex-row align-items-center mx-2">
+            <img src="../assets/img/keep_icon.svg" alt="kept" class="mx-1" title="Keeps">
+            {{ keep.kept }}
+          </div>
+        </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        Keep stuff
+      
+      <div class="body flex-grow-1 d-flex flex-column">
+        <h2>
+          {{ keep.name }}
+        </h2>
+        <p>
+          {{ keep.description }}
+        </p>
+        <router-link class="txt-cs-6" :to="{ name: 'Profile', params: { id: keep.creator.id } }" :title="keep.creator.name"
+        @click="closeModal()">
+          <div class="creator d-flex flex-row justify-content-start align-items-center">
+            <img :src="keep.creator.picture" :alt="keep.creator.name" :title="keep.creator.name" class="elevation-1"> 
+            <span class="mx-2">
+              {{ keep.creator.name }}
+            </span>
+          </div>
+        </router-link>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      
+      <div class="foot d-flex flex-row">
+        <form @submit.prevent="addKeepToVault()" v-if="myVaults?.length > 1">
+          <label for="vaults" class="d-none">Vaults</label>
+          <select name="vaults" v-model="editable.vaultId">
+            <option disabled selected value="">Vault</option>
+            <option v-for="v in myVaults" :key="v.id" :value="v.id">{{ v.name }}</option>
+          </select>
+          <button type="submit" class="btn btn-dark mx-2">
+            Add to Vault
+          </button>
+        </form>
       </div>
+
+    </div>
+
+  </div>
 </template>
   
 <script>
+import { computed, ref } from 'vue'
+import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
+import { vaultsService } from '../services/VaultsService'
+import Pop from '../utils/Pop'
+import { Modal } from 'bootstrap'
   export default {
-    props:{
-
-    },
     setup() {
+      const editable = ref({ vaultId: ''})
       return {
-  
+        editable,
+        keep: computed(()=>AppState?.activeKeep),
+        myVaults: computed(()=>AppState?.myVaults),
+
+        async addKeepToVault(){
+          logger.log('adding keep to vault')
+          if(editable.value.vaultId == ''){
+            logger.log('no vault selected')
+            return
+          }
+          editable.value.keepId = AppState.activeKeep.id
+          logger.log(editable.value)
+          try {
+            await vaultsService.addKeepToVault(editable.value)
+            Pop.success('Added to Vault')
+          } catch (error) {
+            logger.log(error, 'assKeepToVault()')
+            Pop.error(error)
+          }
+        },
+
+        closeModal(){
+          logger.log('closing the modal')
+          Modal.getOrCreateInstance('#keepModal').hide()
+        }
       }
     }
   }
 </script>
 
 <style scoped>
+.modal-content-container{
+  max-height: 100vh;
+}
+.modal-slot{
+  width: 0;
+  min-width: 45%;
+}
+.keep-img{
+    flex-grow: 1;
+}
+.keep-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.keep-content{
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.keep-content .head{
 
+}
+.keep-content .body{
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ text-align: center;
+ text-align: left;
+ padding: 0.5rem 0;
+}
+.keep-content .body p{
+  font-size: 0.85rem;
+}
+.keep-content .body h2{
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+.keep-content .foot{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.creator img {
+    height: 40px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+@media screen and (max-width: 576px) { 
+  .modal-slot{
+    width: 100% !important;
+    min-height: 45vh;
+  }
+  .keep-img{
+    height: 50vh;
+  }
+}
 </style>

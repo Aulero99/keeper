@@ -11,6 +11,7 @@ class AccountService {
     try {
       const res = await api.get(MDI)
       AppState.account = new Account(res.data)
+      this.getVaultsByAccountId()
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
@@ -28,7 +29,7 @@ class AccountService {
     logger.log('getVaultsByAccountId()')
     const res = await api.get(MDI + '/vaults')
     // logger.log(res.data)
-    AppState.vaults = res.data.map(v => new Vault(v))
+    AppState.myVaults = res.data.map(v => new Vault(v))
     logger.log(AppState.vaults)
 }
 }

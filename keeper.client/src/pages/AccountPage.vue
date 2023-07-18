@@ -1,42 +1,57 @@
 <template>
+  <ProfileCard :profile="account" class="mt-4"/>
+  
   <section class="row">
-    <div class="about text-center">
-      <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
+    <div class="col-12 text-center">
+      {{ myVaults.length }} Vaults | {{ keeps.length }} Keeps
     </div>
   </section>
-  <section class="row">
-    <h2 class="col-12">Vaults</h2>
-    <div v-for="v in vaults" :key="v.id" class="col-3">
-      <VaultCard :vault="v"/>
+  
+  <section class="row mt-4">
+    <div class="col-12 overflow-hidden d-flex flex-row justify-content-center">
+      <div class="limit-width">
+        <h2>Vaults</h2>
+      </div>
     </div>
   </section>
-  <section class="row">
-    <h2 class="col-12">Keeps</h2>
 
-    <div class="col-3" v-for="k in keeps" :key="k">
-      <KeepCard :keep="k"/>
+  <section class="row">
+    <div class="col-12 d-flex flex-row justify-content-center">
+      <div class="limit-width d-flex flex-row flex-wrap">
+        <div v-for="v in myVaults" :key="v.id" class="me-3 mb-3">
+          <VaultCard :vault="v"/>
+        </div>
+      </div>
     </div>
   </section>
+  
+  <section class="row mt-4">
+    <div class="col-12 d-flex flex-row justify-content-center">
+      <div class="limit-width">
+        <h2>Keeps</h2>
+      </div>
+    </div>
+  </section>
+  
+  <KeepsContainer/>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { AppState } from '../AppState';
 import Pop from '../utils/Pop';
 import { logger } from '../utils/Logger';
 import { accountService } from '../services/AccountService';
 export default {
   setup() {
-    async function getVaultsByAccountId(){
-      try {
-        await accountService.getVaultsByAccountId()
-      } catch (error) {
-        logger.log(error, "getAccountVaults()")
-        Pop.error(error)
-      }
-    }
+    // async function getVaultsByAccountId(){
+    //   try {
+    //     await accountService.getVaultsByAccountId()
+    //   } catch (error) {
+    //     logger.log(error, "getAccountVaults()")
+    //     Pop.error(error)
+    //   }
+    // }
 
     async function getKeepsByAccountId(){
       try {
@@ -48,12 +63,15 @@ export default {
     }
 
     onMounted(()=>{
-      getVaultsByAccountId()
+      // getVaultsByAccountId()
       getKeepsByAccountId()
     })
+    onUnmounted(()=>{
+        AppState.keeps = []
+      })
     return {
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults),
+      myVaults: computed(() => AppState.myVaults),
       keeps: computed(() => AppState.keeps)
     }
   }

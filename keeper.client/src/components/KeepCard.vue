@@ -1,21 +1,40 @@
 <template>
-  <div class="card overflow-hidden">
-    <img :src="keep.img" :alt="keep.name">
-    {{ keep.name }}
-    <img :src="keep.creator.picture" :alt="keep.creator.name">
-    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#keepModal" @click="openModal(keep.id)">Open Modal</button>
+  <div class="keep-card-container">
+    <div class="keep-card fill elevation-3" @click="openModal(keep.id)">
+      
+      <div class="img-container fill">
+        <img :src="keep.img" :alt="keep.name">
+      </div>
+  
+      <div class="info-container">
+        <div class="info">
+          <div class="title">
+            {{ keep.name }}
+          </div>
+          <div class="creator">
+            <img :src="keep.creator.picture" :alt="keep.creator.name" :title="keep.creator.name" class="profile-img">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <DeleteButton class="delete" title="Remove From Vault" 
+    v-if="keep?.vaultKeepId" 
+    @click="removeKeepFromVault(keep.vaultKeepId)"/>
   </div>
 </template>
   
 <script>
-// import bootstrap from 'bootstrap'
-// import { bootstrap } from '../../node_modules/bootstrap'
-import { AppState } from '../AppState'
-import { Keep } from '../models/Keep'
+import { Modal } from 'bootstrap'
+import { Keep, VaultedKeep } from '../models/Keep'
 import { logger } from '../utils/Logger'
+import { keepsService } from '../services/KeepsService'
+import Pop from '../utils/Pop'
+import { vaultsService } from '../services/VaultsService'
   export default {
     props:{
-        keep: { type: Keep, required: true }
+        keep: { type: Keep || VaultedKeep, required: true }
     },
     setup() {
         // const myModalEl = document.getElementById('exampleModal')
@@ -23,11 +42,21 @@ import { logger } from '../utils/Logger'
         // logger.log('modal launched')
         // })
       return {
-        openModal(id){
-            // TODO fix modal bug where bootstrap will not import for js launch
+        async openModal(id){
             logger.log('Opening modal for id', id)
-            AppState.activeKeep = AppState.keeps.find(k=>k.id = id)
-            logger.log(AppState.activeKeep)
+            await keepsService.getKeepById(id)
+            Modal.getOrCreateInstance('#keepModal').show()
+        },
+
+        async removeKeepFromVault(id){
+          try {
+            if(await Pop.confirm("Do you want to remove this keep from the vault?")){
+              await vaultsService.removeKeepFromVault(id)
+            }
+          } catch (error) {
+            Pop.error(error)
+            logger.log(error, 'removeKeepFromVault()')
+          }
         }
       }
     }
@@ -35,5 +64,61 @@ import { logger } from '../utils/Logger'
 </script>
 
 <style scoped>
+.keep-card-container{
+  max-height: 450px;
+  width: 100%;
+  position: relative;
+}
+.keep-card{
+  background-color: var(--cs-1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.img-container img{
+  width: 100%;
+}
+.info-container{
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  top:0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 100%);
+}
+.info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: var(--cs-1);
+}
+.title{
+    flex-grow: 1;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.creator{
+}
+.profile-img{
+    height: 30px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
+.delete{
+  z-index: 10;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+}
 </style>

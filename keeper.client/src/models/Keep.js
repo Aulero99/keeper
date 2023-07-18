@@ -13,3 +13,10 @@ export class Keep {
         this.views = data.views
     }
 }
+
+export class VaultedKeep extends Keep{
+    constructor(data){
+        super(data)
+        this.vaultKeepId = data.vaultKeepId
+    }
+}

@@ -1,8 +1,12 @@
 <template>
-  <section class="row display-flex flex-row justify-content-center overflow-hidden" v-if="keeps.length > 1">
-    <div class="keeps-container">
-      <div v-for="k in keeps" :key="k.id" class="keep-slot">
-        <KeepCard :keep="k"/>
+  <section class="row" v-if="keeps.length > 0">
+    <div class="col-12 overflow-hidden d-flex flex-row justify-content-center">
+      <div class="limit-width">
+        <div class="keeps-container">
+          <div v-for="k in keeps" :key="k.id" class="keep-slot">
+            <KeepCard :keep="k"/>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -25,9 +29,7 @@ import { AppState } from '../AppState'
 
 <style scoped>
 .keeps-container{
-  margin: 1rem 0;
   width: 100%;
-  max-width: 1200px;
   columns: 6 150px;
   column-gap: 1rem;
 }

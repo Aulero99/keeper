@@ -48,6 +48,7 @@ form:invalid button[type="submit"] {
   --cs-4: #E9D8D6;
   --cs-5: #877A8F;
   --cs-6: #2D2D2D;
+  --avatar-size: 6rem;
 }
 .rubik{
   font-family: 'Rubik', sans-serif;
@@ -58,3 +59,10 @@ form:invalid button[type="submit"] {
 }
 .fill-y{ height: 100%; }
 .fill-x{ width: 100%; }
+
+.txt-cs-6{ color: var(--cs-6); text-decoration: none;}
+
+.limit-width{
+  width: 100%; 
+  max-width: 1200px; 
+}

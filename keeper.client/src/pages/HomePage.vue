@@ -1,13 +1,9 @@
 <template>
-  <section class="row">
-    <div v-for="k in keeps" :key="k.id" class="col-3">
-      <KeepCard :keep="k"/>
-    </div>
-  </section>
+  <KeepsContainer class="mt-4"/>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { logger } from '../utils/Logger'
 import { keepsService } from '../services/KeepsService'
 import Pop from '../utils/Pop'
@@ -24,6 +20,9 @@ export default {
     }
     onMounted(()=>{
       getKeepsFromApi()
+    })
+    onUnmounted(()=>{
+      AppState.keeps = []
     })
     return {
       keeps: computed(() => AppState.keeps)

@@ -3,7 +3,7 @@ export class Profile {
     this.id = data.id
     this.name = data.name
     this.picture = data.picture
-    this.coverImg = data.coverImg || null
+    this.coverImg = data.coverImg || 'https://wallpapercave.com/wp/wp2919318.jpg'
     // TODO add additional properties if needed
   }
 }
