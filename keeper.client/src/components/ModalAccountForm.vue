@@ -1,6 +1,7 @@
 <template>
-  <div class="modal-header">
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal-header d-flex flex-row justify-content-between">
+    <h3 class="m-0">Edit Account</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
   <form @submit.prevent="editAccount()" class="d-flex flex-column">

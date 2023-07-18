@@ -42,8 +42,14 @@ import { Vault } from '../models/Vault'
 
 <style scoped>
 .vault-card-container{
-  width: 10rem;
+  width: 15rem;
   height: 10rem;
+  transition: all 100ms ease-in-out;
+  margin-bottom: 1rem;
+}
+.vault-card-container:hover{
+  height: 11rem;
+  margin-bottom: 0;
 }
 .vault-card{
   border-radius: 0.5rem;

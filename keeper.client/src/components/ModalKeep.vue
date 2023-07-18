@@ -39,20 +39,23 @@
       </div>
       
       <div class="foot d-flex flex-row">
-        <form @submit.prevent="addKeepToVault()" v-if="myVaults?.length > 1 && !activeVault">
+        <form @submit.prevent="addKeepToVault()" 
+        v-if="myVaults?.length > 1 && !activeVault"
+        class="d-flex flex-row">
           <label for="vaults" class="d-none">Vaults</label>
-          <select name="vaults" v-model="editable.vaultId">
+          <select name="vaults" v-model="editable.vaultId" class="form-select" aria-label="Add to Vault">
             <option disabled selected value="">Vault</option>
             <option v-for="v in myVaults" :key="v.id" :value="v.id">{{ v.name }}</option>
           </select>
-          <button type="submit" class="btn btn-dark mx-2">
-            Add to Vault
+          <button type="submit" class="btn btn-dark ms-2">
+            Add
           </button>
         </form>
-        <button class="btn btn-dark" 
+
+        <button class="btn btn-dark d-flex flex-row fill-x d-flex flex-row justify-content-center" 
         v-if="activeVault"
         @click="removeKeepFromVault(keep.id)">
-          Remove From Vault
+          Remove
         </button>
       </div>
 
@@ -98,8 +101,10 @@ import { Modal } from 'bootstrap'
         async removeKeepFromVault(id){
           try {
             const vaultKeepId = AppState.keeps.find(k=> k.id == id).vaultKeepId
-            vaultsService.removeKeepFromVault(vaultKeepId)
-            this.closeModal()
+            if(await Pop.confirm('Do you want to remove this keep from the vault?')){
+              vaultsService.removeKeepFromVault(vaultKeepId)
+              this.closeModal()
+            }
           } catch (error) {
             Pop.error(error)
             logger.error(`removeKeepFromVault(${id})`, error)
