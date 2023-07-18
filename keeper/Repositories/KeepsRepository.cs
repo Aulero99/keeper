@@ -46,6 +46,7 @@ namespace keeper.Repositories
             LEFT JOIN vaultKeeps v ON v.keepId = k.id
             LEFT JOIN accounts a ON k.creatorId = a.id 
             GROUP BY (k.id)
+            ORDER BY k.id DESC
             ;";
             
             return _db.Query<Keep, Profile, Keep>(sql,(k,p)=>{

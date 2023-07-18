@@ -20,8 +20,8 @@
     </div>
     
     <DeleteButton class="delete" title="Remove From Vault" 
-    v-if="keep?.vaultKeepId" 
-    @click="removeKeepFromVault(keep.vaultKeepId)"/>
+    v-if="keep.creator.id == account.id" 
+    @click="deleteKeep(keep.id)"/>
   </div>
 </template>
   
@@ -31,7 +31,8 @@ import { Keep, VaultedKeep } from '../models/Keep'
 import { logger } from '../utils/Logger'
 import { keepsService } from '../services/KeepsService'
 import Pop from '../utils/Pop'
-import { vaultsService } from '../services/VaultsService'
+import { computed } from 'vue'
+import { AppState } from '../AppState'
   export default {
     props:{
         keep: { type: Keep || VaultedKeep, required: true }
@@ -42,16 +43,18 @@ import { vaultsService } from '../services/VaultsService'
         // logger.log('modal launched')
         // })
       return {
+        account: computed(()=> AppState.account),
         async openModal(id){
             logger.log('Opening modal for id', id)
             await keepsService.getKeepById(id)
             Modal.getOrCreateInstance('#keepModal').show()
         },
 
-        async removeKeepFromVault(id){
+        async deleteKeep(id){
           try {
-            if(await Pop.confirm("Do you want to remove this keep from the vault?")){
-              await vaultsService.removeKeepFromVault(id)
+            if(await Pop.confirm("Do you want to remove delete this keep?")){
+              await keepsService.deleteKeep(id)
+              Pop.success("Deleted Keep")
             }
           } catch (error) {
             Pop.error(error)

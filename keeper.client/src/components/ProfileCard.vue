@@ -18,6 +18,7 @@
 </template>
   
 <script>
+import { Modal } from 'bootstrap'
 import { Account, Profile } from '../models/Account'
 import { logger } from '../utils/Logger'
   export default {
@@ -27,7 +28,8 @@ import { logger } from '../utils/Logger'
     setup() {
       return {
         editAccount(){
-            logger.log('editing account')
+            logger.log('newKeep()')
+            Modal.getOrCreateInstance('#editAccountModal').show()
         }
       }
     }

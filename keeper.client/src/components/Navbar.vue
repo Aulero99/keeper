@@ -1,30 +1,30 @@
 <template>
-  <section class="d-flex flex-row justify-content-between navbar fill elevation-3">
-    
-
-    <div class="d-none d-sm-flex flex-row justify-content-start links fill-y nav-section ">
-        <div class="link fill-y">
-          <router-link :to="{ name: 'Home' }" class="d-flex">
-            Home
-          </router-link>
-        </div>
-
-        
-      </div>
+  <section class="navbar fill elevation-3 d-flex flex-row justify-content-center">
+    <div class="limit-width fill d-flex flex-row justify-content-between ">
       
-      <div class="fill-y nav-section">
+      <div class="d-flex flex-row justify-content-sm-start justify-content-center links fill-y nav-section order-2 order-sm-1">
+          <div class="link fill-y d-none d-sm-flex">
+            <router-link :to="{ name: 'Home' }" class="d-flex">
+              Home
+            </router-link>
+          </div>
+          <CreateDropdown/>      
+      </div>
+        
+      <div class="fill-y nav-section order-1 order-sm-2">
         <router-link class="navbar-brand d-flex flex-row justify-content-start justify-content-sm-center align-items-start fill" :to="{ name: 'Home' }">
           <div class="d-flex flex-column align-items-center fill-y">
             <img alt="logo" src="../assets/img/logo.svg" class="logo fill-y"/>
           </div>
         </router-link>
       </div>
-      
-      <div class="fill-y nav-section d-flex flex-row justify-content-end">      
+        
+      <div class="fill-y nav-section d-flex flex-row justify-content-end order-3">      
         <!-- LOGIN COMPONENT HERE -->
         <Login />
       </div>
 
+    </div>
   </section>
 </template>
 

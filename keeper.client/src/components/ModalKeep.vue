@@ -39,7 +39,7 @@
       </div>
       
       <div class="foot d-flex flex-row">
-        <form @submit.prevent="addKeepToVault()" v-if="myVaults?.length > 1">
+        <form @submit.prevent="addKeepToVault()" v-if="myVaults?.length > 1 && !activeVault">
           <label for="vaults" class="d-none">Vaults</label>
           <select name="vaults" v-model="editable.vaultId">
             <option disabled selected value="">Vault</option>
@@ -49,6 +49,11 @@
             Add to Vault
           </button>
         </form>
+        <button class="btn btn-dark" 
+        v-if="activeVault"
+        @click="removeKeepFromVault(keep.id)">
+          Remove From Vault
+        </button>
       </div>
 
     </div>
@@ -70,6 +75,7 @@ import { Modal } from 'bootstrap'
         editable,
         keep: computed(()=>AppState?.activeKeep),
         myVaults: computed(()=>AppState?.myVaults),
+        activeVault: computed(()=>AppState.activeVault),
 
         async addKeepToVault(){
           logger.log('adding keep to vault')
@@ -81,10 +87,22 @@ import { Modal } from 'bootstrap'
           logger.log(editable.value)
           try {
             await vaultsService.addKeepToVault(editable.value)
+            AppState.activeKeep.kept++
             Pop.success('Added to Vault')
           } catch (error) {
-            logger.log(error, 'assKeepToVault()')
+            logger.log(error, 'addKeepToVault()')
             Pop.error(error)
+          }
+        },
+
+        async removeKeepFromVault(id){
+          try {
+            const vaultKeepId = AppState.keeps.find(k=> k.id == id).vaultKeepId
+            vaultsService.removeKeepFromVault(vaultKeepId)
+            this.closeModal()
+          } catch (error) {
+            Pop.error(error)
+            logger.error(`removeKeepFromVault(${id})`, error)
           }
         },
 

@@ -19,7 +19,7 @@ class VaultsService{
     async getKeepsInVault(id) {
         const res = await api.get(`api/vaults/${id}/keeps`)
         logger.log(res.data)
-        AppState.keeps = res.data.map(k=> new VaultedKeep(k))
+        AppState.keeps = res.data.map( k => new VaultedKeep(k) )
         logger.log(AppState.keeps)
     }
 
@@ -33,7 +33,20 @@ class VaultsService{
     async removeKeepFromVault(id){
         const res = await api.delete(`api/vaultkeeps/${id}`)
         logger.log(res.data)
-        AppState.keeps = AppState.keeps.filter(k=>k.vaultKeepId != id)
+        AppState.keeps = AppState.keeps.filter( k => k.vaultKeepId != id )
+    }
+
+    async postNewVault(data){
+        logger.log('Posting New Vault with data', data)
+        const res = await api.post('api/vaults', data)
+        logger.log(res.data)
+        AppState.myVaults.push(new Vault(res.data))
+    }
+
+    async deleteVault(id){
+        const res = await api.delete(`api/vaults/${id}`)
+        logger.log(res.data)
+        AppState.myVaults = AppState.myVaults.filter( v => v.id != id )
     }
 }
 

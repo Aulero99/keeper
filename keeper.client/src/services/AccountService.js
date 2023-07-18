@@ -10,7 +10,9 @@ class AccountService {
   async getAccount() {
     try {
       const res = await api.get(MDI)
+      logger.log(res.data)
       AppState.account = new Account(res.data)
+      logger.log(AppState.account)
       this.getVaultsByAccountId()
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
