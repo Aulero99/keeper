@@ -9,13 +9,22 @@
   </main>
   
   <footer class="rubik">
+
     <Modal id="keepModal">
       <ModalKeep/>
     </Modal>
   
-    <Modal id="vaultModal">
-      <ModalVault/>
-    </Modal>
+    <ModalNotFull id="editVaultModal">
+      <ModalVaultForm/>
+    </ModalNotFull>
+
+    <ModalNotFull id="editKeepModal">
+      <ModalKeepForm/>
+    </ModalNotFull>
+
+    <ModalNotFull id="editAccountModal">
+      <ModalAccountForm/>
+    </ModalNotFull>
   </footer>
   
 </template>
