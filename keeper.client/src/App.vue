@@ -1,24 +1,22 @@
 <template>
   
-  <header>
+  <nav class="rubik">
     <Navbar />
-  </header>
+  </nav>
   
-  <main class="container-fluid">
+  <main class="container-fluid rubik">
     <router-view />
   </main>
   
-  <footer class="m-3">
-    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#vaultModal" >Open Modal</button>
-  </footer>
+  <footer class="rubik">
+    <Modal id="keepModal">
+      <ModalKeep/>
+    </Modal>
   
-  <Modal id="keepModal">
-    <ModalKeep/>
-  </Modal>
-
-  <Modal id="vaultModal">
-    <ModalVault/>
-  </Modal>
+    <Modal id="vaultModal">
+      <ModalVault/>
+    </Modal>
+  </footer>
   
 </template>
 
@@ -41,12 +39,27 @@ export default {
 
 :root{
   --main-height: calc(100vh - 32px - 64px);
+  --nav-h: 4rem;
+}
+nav{
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  z-index: 1000;
+  height: var(--nav-h);
+}
+main{
+  margin: var(--nav-h) 0 0 0;
+}
+@media screen and (max-width: 576px) { 
+  nav{
+    bottom: 0;
+    top: auto; 
+  } 
+  main{
+  margin: 0 0 var(--nav-h) 0;
+}
 }
 
-
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
-}
 </style>

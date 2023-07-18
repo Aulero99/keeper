@@ -42,13 +42,19 @@ form:invalid button[type="submit"] {
 
 
 :root {
-  --cs-white: #F9F6FA;
-  --cs-seashell: #FEF6F0;
-  --cs-lavender: #DED6E9;
-  --cs-rose: #E9D8D6;
-  --cs-dk-pink: #877A8F;
-  --cs-black: #2D2D2D;
+  --cs-1: #F9F6FA;
+  --cs-2: #FEF6F0;
+  --cs-3: #DED6E9;
+  --cs-4: #E9D8D6;
+  --cs-5: #877A8F;
+  --cs-6: #2D2D2D;
 }
 .rubik{
   font-family: 'Rubik', sans-serif;
 }
+.fill{
+  height: 100%;
+  width: 100%;
+}
+.fill-y{ height: 100%; }
+.fill-x{ width: 100%; }
