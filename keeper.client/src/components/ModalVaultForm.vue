@@ -65,12 +65,12 @@ return {
   editable,
   async newVault(){
       try {
-          await vaultsService.postNewVault(editable.value)
-          Pop.success
-          Modal.getOrCreateInstance('#editVaultModal').hide()
+          await vaultsService.postNewVault(editable.value);
+          Pop.success;
+          Modal.getOrCreateInstance('#editVaultModal').hide();
       } catch (error) {
-          logger.log(error,'newKeep()')
-          Pop.error(error)
+          logger.log(error,'newKeep()');
+          Pop.error(error);
       }
   }
 

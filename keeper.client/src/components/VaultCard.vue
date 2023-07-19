@@ -7,9 +7,9 @@
           <img :src="vault.img" :alt="vault.name" :title="vault.name">
         </div>
 
-        <div class="info-container">
-          <div class="info">
-            <div class="title">
+        <div class="info-container fill d-flex flex-column justify-content-end">
+          <div class="info d-flex flex-row justify-content-between">
+            <div class="title d-flex flex-row justify-content-between align-items-center">
               {{ vault.name }}
               <div class="locked" v-if="vault.isPrivate">
                 <i class="mdi mdi-lock" title="Private Vault"></i>
@@ -40,19 +40,17 @@ import { Vault } from '../models/Vault'
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .vault-card-container{
   width: 15rem;
   height: 10rem;
-  transition: all 100ms ease-in-out;
+  transition: all var(--ease);
   margin-bottom: 1rem;
-}
-.vault-card-container:hover{
-  height: 11rem;
-  margin-bottom: 0;
-}
-.vault-card-container:hover .info-container{
-  padding: 0.5rem 0.5rem 1.6rem 0.5rem;
+    &:hover{
+      height: 11rem;
+      margin-bottom: 0;
+        .info-container{ padding: 0.5rem 0.5rem 1.6rem 0.5rem; }
+    }
 }
 .vault-card{
   border-radius: 0.5rem;
@@ -65,31 +63,17 @@ import { Vault } from '../models/Vault'
   object-fit: cover;
 }
 .info-container{
-  transition: all 100ms ease-in-out;
+  transition: all var(--ease);
   position: absolute;
   z-index: 1;
-  height: 100%;
-  width: 100%;
   top:0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   padding: 0.5rem;
-  background: rgb(0,0,0);
-  background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 100%);
+  background: var(--cs-6);
+  background: var(--gradient);
 }
-.info{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: var(--cs-1);
-}
+.info{ color: var(--cs-1); }
 .title{
   flex-grow: 1;
   height: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 </style>

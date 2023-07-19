@@ -27,18 +27,15 @@
 import { Modal } from 'bootstrap'
 import { logger } from '../utils/Logger'
   export default {
-    props:{
-
-    },
     setup() {
       return {
         newKeep(){
-            logger.log('newKeep()')
-            Modal.getOrCreateInstance('#editKeepModal').show()
+            logger.log('newKeep()');
+            Modal.getOrCreateInstance('#editKeepModal').show();
         },
         newVault(){
-            logger.log('newVault()')
-            Modal.getOrCreateInstance('#editVaultModal').show()
+            logger.log('newVault()');
+            Modal.getOrCreateInstance('#editVaultModal').show();
         }
       }
     }
@@ -46,9 +43,6 @@ import { logger } from '../utils/Logger'
 </script>
 
 <style lang="scss" scoped>
-a{
-    cursor: pointer;
-}
 .dropdown {
   position: relative;
   display: inline-block;

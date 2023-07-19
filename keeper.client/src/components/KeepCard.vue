@@ -1,15 +1,15 @@
 <template>
-  <div class="keep-card-container">
-    <div class="keep-card fill elevation-3" 
-    type="button"
+  <div class="keep-card-container fill-x">
+    <div type="button" 
+    class="keep-card fill elevation-3" 
     @click="openModal(keep.id)">
       
       <div class="img-container fill">
         <img :src="keep.img" :alt="keep.name">
       </div>
   
-      <div class="info-container">
-        <div class="info">
+      <div class="info-container fill d-flex flex-column justify-content-end">
+        <div class="info d-flex flex-row justify-content-between">
           <div class="title">
             {{ keep.name }}
           </div>
@@ -40,27 +40,23 @@ import { AppState } from '../AppState'
         keep: { type: Keep || VaultedKeep, required: true }
     },
     setup() {
-        // const myModalEl = document.getElementById('exampleModal')
-        // myModalEl.addEventListener('show.bs.modal', event => {
-        // logger.log('modal launched')
-        // })
       return {
         account: computed(()=> AppState.account),
         async openModal(id){
-            logger.log('Opening modal for id', id)
-            await keepsService.getKeepById(id)
-            Modal.getOrCreateInstance('#keepModal').show()
+            logger.log('Opening modal for id', id);
+            await keepsService.getKeepById(id);
+            Modal.getOrCreateInstance('#keepModal').show();
         },
 
         async deleteKeep(id){
           try {
             if(await Pop.confirm("Do you want to delete this keep?")){
-              await keepsService.deleteKeep(id)
-              Pop.success("Deleted Keep")
+              await keepsService.deleteKeep(id);
+              Pop.success("Deleted Keep");
             }
           } catch (error) {
-            Pop.error(error)
-            logger.log(error, 'removeKeepFromVault()')
+            Pop.error(error);
+            logger.log(error, 'removeKeepFromVault()');
           }
         }
       }
@@ -68,10 +64,9 @@ import { AppState } from '../AppState'
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .keep-card-container{
   max-height: 450px;
-  width: 100%;
   position: relative;
 }
 .keep-card{
@@ -80,34 +75,24 @@ import { AppState } from '../AppState'
   overflow: hidden;
   border-radius: 0.5rem;
   cursor: pointer;
+    &:hover .info-container{
+      padding: 0.5rem 0.5rem 0.75rem 0.5rem;
+    }
 }
 .img-container img{
   width: 100%;
   object-fit: cover;
 }
-.keep-card:hover .info-container{
-  padding: 0.5rem 0.5rem 0.75rem 0.5rem;
-}
 .info-container{
   position: absolute;
   z-index: 1;
-  height: 100%;
-  width: 100%;
   top:0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   padding: 0.5rem;
-  background: rgb(0,0,0);
-  background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 100%);
-  transition: all ease-in-out 100ms;
+  background: var(--cs-6);
+  background: var(--gradient);
+  transition: all var(--ease);
 }
-.info{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: var(--cs-1);
-}
+.info{ color: var(--cs-1); }
 .title{
     flex-grow: 1;
     height: auto;
@@ -115,8 +100,6 @@ import { AppState } from '../AppState'
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-}
-.creator{
 }
 .profile-img{
     height: 30px;

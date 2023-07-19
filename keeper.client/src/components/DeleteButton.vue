@@ -1,38 +1,23 @@
 <template>
-    <div class="delete-button elevation-2" type="button">
+    <div type="button"
+    class="delete-button elevation-2 d-flex flex-row justify-content-center align-items-center" 
+    >
       <i class="mdi mdi-trash-can"></i>
     </div>
 </template>
-  
-<script>
-  export default {
-    props:{
 
-    },
-    setup() {
-      return {
-  
-      }
-    }
-  }
-</script>
-
-<style scoped>
+<style lang="scss" scoped>
 .delete-button{
     background-color: var(--cs-4);
     color: var(--cs-6);
     height: 1.5rem;
     aspect-ratio: 1/1;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     border-radius: 50%;
     cursor: pointer;
-    transition: all ease-in-out 100ms;
-}
-.delete-button:hover{
-    background-color: var(--cs-6);
-    color: var(--cs-1);
+    transition: all var(--ease);
+      &:hover{
+        background-color: var(--cs-6);
+        color: var(--cs-1);
+      }
 }
 </style>

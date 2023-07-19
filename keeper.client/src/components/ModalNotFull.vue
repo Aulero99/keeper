@@ -9,23 +9,4 @@
         </div>
       </div>
     </div>
-    </template>
-      
-    <script>
-      export default {
-        props:{
-    
-        },
-        setup() {
-          return {
-      
-          }
-        }
-      }
-    </script>
-    
-    <style scoped>
-    .modal-param-fit{
-      /* height: 95vh; */
-    }
-    </style>
+</template>

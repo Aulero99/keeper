@@ -57,12 +57,12 @@ return {
     editable,
     async newKeep(){
         try {
-            await keepsService.postNewKeep(editable.value)
-            Pop.success
-            Modal.getOrCreateInstance('#editVaultModal').hide()
+            await keepsService.postNewKeep(editable.value);
+            Pop.success;
+            Modal.getOrCreateInstance('#editVaultModal').hide();
         } catch (error) {
-            logger.log(error,'newKeep()')
-            Pop.error(error)
+            logger.log(error,'newKeep()');
+            Pop.error(error);
         }
     }
 

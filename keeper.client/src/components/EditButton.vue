@@ -1,36 +1,22 @@
 <template>
-    <div class="edit-button elevation-3" type="button">
+    <div type="button" 
+    class="edit-button d-flex justify-content-center align-items-center elevation-3"
+    >
         <i class="mdi mdi-pencil-outline"></i>
     </div>
 </template>
-  
-<script>
-  export default {
-    props:{
 
-    },
-    setup() {
-      return {
-  
-      }
-    }
-  }
-</script>
-
-<style scoped>
+<style lang="scss" scoped>
 .edit-button{
     background-color: var(--cs-1);
     width: 2rem;
     height: 1.5rem;
     border-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
-    transition: all ease-in-out 100ms;
-}
-.edit-button:hover{
-    background-color: var(--cs-6);
-    color: var(--cs-1);
+    transition: all var(--ease);
+      &:hover{
+        background-color: var(--cs-6);
+        color: var(--cs-1);
+      }
 }
 </style>

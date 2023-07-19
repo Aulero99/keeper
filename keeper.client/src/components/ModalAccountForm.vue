@@ -57,21 +57,22 @@ return {
   account: computed(()=>AppState.account),
   async editAccount(){
       if(!editable.value.name){
-        editable.value.name = AppState.account.name
+        editable.value.name = AppState.account.name;
       }
       if(!editable.value.picture){
-        editable.value.picture = AppState.account.picture
+        editable.value.picture = AppState.account.picture;
       }
       if(!editable.value.coverImg){
-        editable.value.coverImg = AppState.account.coverImg
+        editable.value.coverImg = AppState.account.coverImg;
       }
       try {
-          await accountService.editAccount(editable.value)
-          Pop.success
-          Modal.getOrCreateInstance('#editAccountModal').hide()
+          await accountService.editAccount(editable.value);
+          Pop.success;
+          Modal.getOrCreateInstance('#editAccountModal').hide();
+          editable.value = {};
       } catch (error) {
-          logger.log(error,'editAccount()')
-          Pop.error(error)
+          logger.log(error,'editAccount()');
+          Pop.error(error);
       }
   }
 

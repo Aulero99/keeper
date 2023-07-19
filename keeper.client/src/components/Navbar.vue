@@ -14,7 +14,7 @@
       <div class="fill-y nav-section order-1 order-sm-2">
         <router-link class="navbar-brand d-flex flex-row justify-content-start justify-content-sm-center align-items-start fill" :to="{ name: 'Home' }">
           <div class="d-flex flex-column align-items-center fill-y">
-            <img alt="logo" src="../assets/img/logo.svg" class="logo fill-y" title="the keepr co."/>
+            <img alt="logo" src="../assets/img/logo.svg" class="fill-y" title="the keepr co."/>
           </div>
         </router-link>
       </div>
@@ -40,26 +40,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .navbar{
   background-color: var(--cs-1);
   padding: 0 1rem;
 }
-.nav-section{
-  width: 33%;
-}
-.logo{
-  height: 100%;
-}
-.links a{
-  transition: all 100ms ease-in-out;
-}
-.links a:hover {
-  text-decoration: none;
-  background-color: var(--cs-4);
-}
+.nav-section{ width: 33%; }
 .links{
   color: var(--cs-6);
+    a{ 
+      transition: all var(--ease); 
+        &:hover {
+          text-decoration: none;
+          background-color: var(--cs-4);
+        }
+    }
 }
 .link{
   display: flex;
@@ -67,14 +62,12 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-right: 0.5rem;
-}
-.link a{
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  color: var(--cs-6);
-  font-weight: 500;
-}
-.links .router-link-exact-active {
-  background-color: var(--cs-4);
+    a{
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      color: var(--cs-6);
+      font-weight: 500;
+    }
+    .router-link-exact-active { background-color: var(--cs-4); }
 }
 </style>

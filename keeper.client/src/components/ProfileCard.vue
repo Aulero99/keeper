@@ -34,7 +34,7 @@ import { logger } from '../utils/Logger'
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .profile-card-container{
     width: 50%;
     max-width: 650px;

@@ -94,46 +94,46 @@ import { Modal } from 'bootstrap'
         activeVault: computed(()=>AppState.activeVault),
 
         async addKeepToVault(){
-          logger.log('adding keep to vault')
+          logger.log('adding keep to vault');
           if(editable.value.vaultId == ''){
-            logger.log('no vault selected')
-            return
+            logger.log('no vault selected');
+            return;
           }
-          editable.value.keepId = AppState.activeKeep.id
-          logger.log(editable.value)
+          editable.value.keepId = AppState.activeKeep.id;
+          logger.log(editable.value);
           try {
-            await vaultsService.addKeepToVault(editable.value)
-            AppState.activeKeep.kept++
-            Pop.success('Added to Vault')
+            await vaultsService.addKeepToVault(editable.value);
+            AppState.activeKeep.kept++;
+            Pop.success('Added to Vault');
           } catch (error) {
-            logger.log(error, 'addKeepToVault()')
-            Pop.error(error)
+            logger.log(error, 'addKeepToVault()');
+            Pop.error(error);
           }
         },
 
         async removeKeepFromVault(id){
           try {
-            const vaultKeepId = AppState.keeps.find(k=> k.id == id).vaultKeepId
+            const vaultKeepId = AppState.keeps.find(k=> k.id == id).vaultKeepId;
             if(await Pop.confirm('Do you want to remove this keep from the vault?')){
-              vaultsService.removeKeepFromVault(vaultKeepId)
-              this.closeModal()
+              vaultsService.removeKeepFromVault(vaultKeepId);
+              this.closeModal();
             }
           } catch (error) {
-            Pop.error(error)
-            logger.error(`removeKeepFromVault(${id})`, error)
+            Pop.error(error);
+            logger.error(`removeKeepFromVault(${id})`, error);
           }
         },
 
         closeModal(){
-          logger.log('closing the modal')
-          Modal.getOrCreateInstance('#keepModal').hide()
+          logger.log('closing the modal');
+          Modal.getOrCreateInstance('#keepModal').hide();
         }
       }
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .modal-content-container{
   max-height: 100vh;
 }
@@ -142,18 +142,36 @@ import { Modal } from 'bootstrap'
   min-width: 45%;
 }
 .keep-img{
-    flex-grow: 1;
-}
-.keep-img img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  flex-grow: 1;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 }
 .keep-content{
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+    .body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding: 0.5rem 0;
+        p{ font-size: 0.85rem; }
+        h2{
+          font-size: 1.8rem;
+          font-weight: 500;
+        }
+    }
+    .foot{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
 }
 .creator-name{
   text-align: right;
@@ -162,30 +180,7 @@ import { Modal } from 'bootstrap'
   margin-right: 0.25rem;
   font-weight: 500;
 }
-.kept-icon{
-  height: 60%;
-}
-.keep-content .body{
- display: flex;
- flex-direction: column;
- justify-content: center;
- text-align: center;
- text-align: left;
- padding: 0.5rem 0;
-}
-.keep-content .body p{
-  font-size: 0.85rem;
-}
-.keep-content .body h2{
-  font-size: 1.8rem;
-  font-weight: 500;
-}
-.keep-content .foot{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+.kept-icon{ height: 60%; }
 .creator img {
     height: var(--avatar-sm-size);
     aspect-ratio: 1/1;
@@ -197,8 +192,6 @@ import { Modal } from 'bootstrap'
     width: 100% !important;
     min-height: 45vh;
   }
-  .keep-img{
-    height: 50vh;
-  }
+  .keep-img{ height: 50vh; }
 }
 </style>
