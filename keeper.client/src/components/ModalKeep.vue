@@ -37,17 +37,19 @@
         
         <div class="foot-section flex-grow-1 pe-2">
           <form @submit.prevent="addKeepToVault()" 
-        v-if="myVaults?.length > 1 && !activeVault"
-        class="d-flex flex-row">
-          <label for="vaults" class="d-none">Vaults</label>
-          <select name="vaults" v-model="editable.vaultId" class="form-select">
-            <option disabled selected value="">Vault</option>
-            <option v-for="v in myVaults" :key="v.id" :value="v.id">{{ v.name }}</option>
-          </select>
-          <button type="submit" class="btn btn-dark ms-2">
-            Add
-          </button>
-        </form>
+            v-if="myVaults?.length > 1 && !activeVault"
+            class="d-flex flex-row">
+              <label for="vaults" class="d-none">Vaults</label>
+              <select name="vaults" v-model="editable.vaultId" class="form-select">
+                <option disabled selected value="">Vault</option>
+                <option v-for="v in myVaults" :key="v.id" :value="v.id">{{ v.name }}</option>
+              </select>
+              <button type="submit" 
+              class="btn btn-dark ms-2"
+              :disabled="editable.vaultId == ''">
+                Add
+              </button>
+          </form>
 
         <button class="btn btn-dark d-flex flex-row fill-x d-flex flex-row justify-content-center" 
         v-if="activeVault"

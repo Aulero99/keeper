@@ -14,7 +14,7 @@
       <div class="fill-y nav-section order-1 order-sm-2">
         <router-link class="navbar-brand d-flex flex-row justify-content-start justify-content-sm-center align-items-start fill" :to="{ name: 'Home' }">
           <div class="d-flex flex-column align-items-center fill-y">
-            <img alt="logo" src="../assets/img/logo.svg" class="logo fill-y"/>
+            <img alt="logo" src="../assets/img/logo.svg" class="logo fill-y" title="the keepr co."/>
           </div>
         </router-link>
       </div>

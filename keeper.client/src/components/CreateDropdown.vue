@@ -1,7 +1,7 @@
 <template>
     <div class="dropdown">
         <div class="button-container">
-            <div class="dropbtn" type="button" title="Create Dropdown">
+            <div class="dropbtn" type="button" name="Create Dropdown">
                 Create
             </div>
         </div>
