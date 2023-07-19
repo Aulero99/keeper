@@ -25,6 +25,23 @@ $themes: (
   ),
 );
 
+:root{
+  --cs-1: #F9F6FA;
+  --cs-2: #FEF6F0;
+  --cs-3: #DED6E9;
+  --cs-4: #E9D8D6;
+  --cs-5: #877A8F;
+  --cs-6: #2D2D2D;
+  --cs-7: #f9f9f9;
+
+  --ease: ease-in-out 100ms;
+
+  --avatar-size: 6rem;
+  --avatar-sm-size: 2.3rem;
+  --main-height: calc(100vh - 32px - 64px);
+  --nav-h: 4rem;
+}
+
 $color-ranges: (
   0: 0,
   5: 5,
