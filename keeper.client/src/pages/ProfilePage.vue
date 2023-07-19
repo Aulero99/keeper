@@ -1,5 +1,7 @@
 <template>
-  <ProfileCard :profile="profile" class="mt-4"/>
+  <section class="row mt-4" v-if="profile?.id">
+    <ProfileCard :profile="profile"/>
+  </section>
 
   <section class="row">
     <div class="col-12 text-center">

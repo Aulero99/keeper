@@ -1,20 +1,18 @@
 <template>
-    <section class="row">
         <div class="col-12 d-flex flex-row justify-content-center">
             <div class="profile-card-container">
                 <div class="img-elements fill">
-                    <img :src="profile.coverImg" :alt="profile.name" class="cover-img">
+                    <img :src="profile.coverImg" :alt="profile.name" class="cover-img elevation-1">
                     <img :src="profile.picture" :alt="profile.name" :title="profile.name" class="avatar elevation-3">
                 </div>
-                <EditButton class="edit-button" @click="editAccount()" v-if="profile?.email" title="Edit Account" />
+                <EditButton class="edit-button" @click="editAccount()" v-if="profile?.email" title="Edit Account" aria-label="Edit Account Details"/>
             </div>
         </div>
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mt-2">
             <h1>
                 {{ profile.name }}
             </h1>
         </div>
-    </section>
 </template>
   
 <script>

@@ -8,14 +8,17 @@
     <div class="modal-slot keep-content d-flex flex-column">
       <div class="head d-flex flex-row justify-content-between">
         <div class="d-flex flex-row fill-y">
+
           <div class="views fill-y d-flex flex-row">
-            <i class="mdi mdi-eye" title="Views"></i>
+            <i class="mdi mdi-eye me-1" title="Views" :aria-label="'Keep'+ keep.name + 'View Count'"></i>
             {{ keep.views }} 
           </div>
+
           <div class="kept fill-y d-flex flex-row align-items-center mx-2">
-            <img src="../assets/img/keep_icon.svg" alt="kept" class="mx-1" title="Keeps">
+            <img src="../assets/img/keep_icon.svg" alt="kept" class="ms-2 me-1 kept-icon" title="Keeps" :aria-label="'Keep'+ keep.name + 'Keep Count'">
             {{ keep.kept }}
           </div>
+        
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -28,7 +31,7 @@
           {{ keep.description }}
         </p>
         <router-link class="txt-cs-6" :to="{ name: 'Profile', params: { id: keep.creator.id } }" :title="keep.creator.name"
-        @click="closeModal()">
+        @click="closeModal()" :aria-label="'Link to Profile Page for' + keep.creator.name">
           <div class="creator d-flex flex-row justify-content-start align-items-center">
             <img :src="keep.creator.picture" :alt="keep.creator.name" :title="keep.creator.name" class="elevation-1"> 
             <span class="mx-2">
@@ -45,16 +48,17 @@
           <label for="vaults" class="d-none">Vaults</label>
           <select name="vaults" v-model="editable.vaultId" class="form-select" aria-label="Add to Vault">
             <option disabled selected value="">Vault</option>
-            <option v-for="v in myVaults" :key="v.id" :value="v.id">{{ v.name }}</option>
+            <option v-for="v in myVaults" :key="v.id" :value="v.id" :aria-label="'Vault Name ' + v.name">{{ v.name }}</option>
           </select>
-          <button type="submit" class="btn btn-dark ms-2">
+          <button type="submit" class="btn btn-dark ms-2" :aria-label="'Add Keep '+ keep.name + ' to Vault'">
             Add
           </button>
         </form>
 
         <button class="btn btn-dark d-flex flex-row fill-x d-flex flex-row justify-content-center" 
         v-if="activeVault"
-        @click="removeKeepFromVault(keep.id)">
+        @click="removeKeepFromVault(keep.id)"
+        aria-label="Remove this keep from the vault">
           Remove
         </button>
       </div>
@@ -143,7 +147,9 @@ import { Modal } from 'bootstrap'
   justify-content: space-between;
 }
 .keep-content .head{
-
+}
+.kept-icon{
+  height: 60%;
 }
 .keep-content .body{
  display: flex;

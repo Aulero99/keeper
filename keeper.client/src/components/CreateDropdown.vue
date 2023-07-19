@@ -6,12 +6,12 @@
             </div>
         </div>
         <div class="dropdown-content elevation-3">
-            <a @click="newKeep()">
+            <div type="button" class="drop-link" @click="newKeep()" aria-label="Create New Keep">
                 New Keep
-            </a>
-            <a @click="newVault()">
+            </div>
+            <div type="button" class="drop-link" @click="newVault()" aria-label="Create New Vault">
                 New Vault
-            </a>
+            </div>
         </div>
     </div>
 </template>
@@ -38,7 +38,7 @@ import { logger } from '../utils/Logger'
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 a{
     cursor: pointer;
 }
@@ -60,34 +60,42 @@ a{
     color: var(--cs-6);
     font-weight: 500;
     cursor: pointer;
+    transition: all 100ms ease-in-out;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0%;
   position: absolute;
+  left: 0;
   top: var(--nav-h);
   background-color: #f9f9f9;
   min-width: 160px;
   z-index: 1000;
+  transition: opacity ease-in-out 100ms;
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.dropdown-content .drop-link {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  transition: all 100ms ease-in-out;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+.dropdown-content .drop-link:hover {
     background-color: #f1f1f1
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
+  max-height: 8rem;
+  opacity: 100%;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
@@ -99,6 +107,7 @@ a{
     .dropdown-content{
         top: auto;
         bottom: var(--nav-h);
+        left: -40px;
     }
 }
 </style>

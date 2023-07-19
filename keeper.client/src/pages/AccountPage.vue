@@ -1,5 +1,7 @@
 <template>
-  <ProfileCard :profile="account" class="mt-4"/>
+  <section class="row mt-4" v-if="account?.id">
+    <ProfileCard :profile="account"/>
+  </section>
   
   <section class="row">
     <div class="col-12 text-center">
@@ -70,9 +72,9 @@ export default {
         AppState.keeps = []
       })
     return {
-      account: computed(() => AppState.account),
-      myVaults: computed(() => AppState.myVaults),
-      keeps: computed(() => AppState.keeps)
+      account: computed(() => AppState?.account),
+      myVaults: computed(() => AppState?.myVaults),
+      keeps: computed(() => AppState?.keeps)
     }
   }
 }

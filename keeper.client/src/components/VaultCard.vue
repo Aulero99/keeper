@@ -1,5 +1,5 @@
 <template>
-  <router-link class="txt-cs-6" :to="{ name: 'Vault', params: { id: vault.id } }" :title="vault.name">
+  <router-link class="txt-cs-6" :to="{ name: 'Vault', params: { id: vault.id } }" :title="vault.name" :aria-label="'Open Vault' + vault.name">
     <div class="vault-card-container">
       
       <div class="vault-card fill elevation-3">

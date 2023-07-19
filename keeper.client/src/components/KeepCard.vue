@@ -1,6 +1,9 @@
 <template>
   <div class="keep-card-container">
-    <div class="keep-card fill elevation-3" @click="openModal(keep.id)">
+    <div class="keep-card fill elevation-3" 
+    type="button" 
+    :aria-label="'View Details of Keep' + keep.name"
+    @click="openModal(keep.id)">
       
       <div class="img-container fill">
         <img :src="keep.img" :alt="keep.name">
@@ -19,7 +22,7 @@
 
     </div>
     
-    <DeleteButton class="delete" title="Remove From Vault" 
+    <DeleteButton class="delete" title="Delete Keep" 
     v-if="keep.creator.id == account.id" 
     @click="deleteKeep(keep.id)"/>
   </div>
@@ -52,7 +55,7 @@ import { AppState } from '../AppState'
 
         async deleteKeep(id){
           try {
-            if(await Pop.confirm("Do you want to remove delete this keep?")){
+            if(await Pop.confirm("Do you want to delete this keep?")){
               await keepsService.deleteKeep(id)
               Pop.success("Deleted Keep")
             }
@@ -81,6 +84,10 @@ import { AppState } from '../AppState'
 }
 .img-container img{
   width: 100%;
+  object-fit: cover;
+}
+.keep-card:hover .info-container{
+  padding: 0.5rem 0.5rem 0.75rem 0.5rem;
 }
 .info-container{
   position: absolute;
@@ -94,6 +101,7 @@ import { AppState } from '../AppState'
   padding: 0.5rem;
   background: rgb(0,0,0);
   background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0) 100%);
+  transition: all ease-in-out 100ms;
 }
 .info{
   display: flex;
