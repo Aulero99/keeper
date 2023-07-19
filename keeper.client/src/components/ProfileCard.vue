@@ -5,7 +5,7 @@
                     <img :src="profile.coverImg" :alt="profile.name" class="cover-img elevation-1">
                     <img :src="profile.picture" :alt="profile.name" :title="profile.name" class="avatar elevation-3">
                 </div>
-                <EditButton class="edit-button" @click="editAccount()" v-if="profile?.email" title="Edit Account" aria-label="Edit Account Details"/>
+                <EditButton class="edit-button" @click="editAccount()" v-if="profile?.email" title="Edit Account"/>
             </div>
         </div>
         <div class="col-12 text-center mt-2">
@@ -37,7 +37,6 @@ import { logger } from '../utils/Logger'
 <style scoped>
 .profile-card-container{
     width: 50%;
-    min-width: 300px;
     max-width: 650px;
     aspect-ratio: 2/1;
     position: relative;

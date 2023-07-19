@@ -4,7 +4,7 @@
       
       <div class="d-flex flex-row justify-content-sm-start justify-content-center links fill-y nav-section order-2 order-sm-1">
           <div class="link fill-y d-none d-sm-flex">
-            <router-link :to="{ name: 'Home' }" class="d-flex" aria-label="Link to Home Page">
+            <router-link :to="{ name: 'Home' }" class="d-flex">
               Home
             </router-link>
           </div>

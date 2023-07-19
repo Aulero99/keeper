@@ -6,16 +6,17 @@
     </div>
 
     <div class="modal-slot keep-content d-flex flex-column">
+
       <div class="head d-flex flex-row justify-content-between">
         <div class="d-flex flex-row fill-y">
 
           <div class="views fill-y d-flex flex-row">
-            <i class="mdi mdi-eye me-1" title="Views" :aria-label="'Keep'+ keep.name + 'View Count'"></i>
+            <i class="mdi mdi-eye me-1" title="Views"></i>
             {{ keep.views }} 
           </div>
 
           <div class="kept fill-y d-flex flex-row align-items-center mx-2">
-            <img src="../assets/img/keep_icon.svg" alt="kept" class="ms-2 me-1 kept-icon" title="Keeps" :aria-label="'Keep'+ keep.name + 'Keep Count'">
+            <img src="../assets/img/keep_icon.svg" alt="kept" class="ms-2 me-1 kept-icon" title="Keeps">
             {{ keep.kept }}
           </div>
         
@@ -30,37 +31,43 @@
         <p>
           {{ keep.description }}
         </p>
-        <router-link class="txt-cs-6" :to="{ name: 'Profile', params: { id: keep.creator.id } }" :title="keep.creator.name"
-        @click="closeModal()" :aria-label="'Link to Profile Page for' + keep.creator.name">
-          <div class="creator d-flex flex-row justify-content-start align-items-center">
-            <img :src="keep.creator.picture" :alt="keep.creator.name" :title="keep.creator.name" class="elevation-1"> 
-            <span class="mx-2">
-              {{ keep.creator.name }}
-            </span>
-          </div>
-        </router-link>
       </div>
       
       <div class="foot d-flex flex-row">
-        <form @submit.prevent="addKeepToVault()" 
+        
+        <div class="foot-section flex-grow-1 pe-2">
+          <form @submit.prevent="addKeepToVault()" 
         v-if="myVaults?.length > 1 && !activeVault"
         class="d-flex flex-row">
           <label for="vaults" class="d-none">Vaults</label>
-          <select name="vaults" v-model="editable.vaultId" class="form-select" aria-label="Add to Vault">
+          <select name="vaults" v-model="editable.vaultId" class="form-select">
             <option disabled selected value="">Vault</option>
-            <option v-for="v in myVaults" :key="v.id" :value="v.id" :aria-label="'Vault Name ' + v.name">{{ v.name }}</option>
+            <option v-for="v in myVaults" :key="v.id" :value="v.id">{{ v.name }}</option>
           </select>
-          <button type="submit" class="btn btn-dark ms-2" :aria-label="'Add Keep '+ keep.name + ' to Vault'">
+          <button type="submit" class="btn btn-dark ms-2">
             Add
           </button>
         </form>
 
         <button class="btn btn-dark d-flex flex-row fill-x d-flex flex-row justify-content-center" 
         v-if="activeVault"
-        @click="removeKeepFromVault(keep.id)"
-        aria-label="Remove this keep from the vault">
+        @click="removeKeepFromVault(keep.id)">
           Remove
         </button>
+        </div>
+
+        <div class="foot-section flex-grow-1 d-flex flex-row justify-content-end">
+          <router-link class="txt-cs-6" :to="{ name: 'Profile', params: { id: keep.creator.id } }" :title="keep.creator.name"
+          @click="closeModal()">
+            <div class="creator d-flex flex-row justify-content-start align-items-center">
+              <span class="creator-name">
+                {{ keep.creator.name }}
+              </span>
+              <img :src="keep.creator.picture" :alt="keep.creator.name" :title="keep.creator.name" class="elevation-1"> 
+            </div>
+          </router-link>
+        </div>
+
       </div>
 
     </div>
@@ -146,7 +153,12 @@ import { Modal } from 'bootstrap'
   flex-direction: column;
   justify-content: space-between;
 }
-.keep-content .head{
+.creator-name{
+  text-align: right;
+  line-height: 1;
+  font-size: 0.8rem;
+  margin-right: 0.25rem;
+  font-weight: 500;
 }
 .kept-icon{
   height: 60%;
@@ -173,7 +185,7 @@ import { Modal } from 'bootstrap'
   align-items: center;
 }
 .creator img {
-    height: 40px;
+    height: 2rem;
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 50%;

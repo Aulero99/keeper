@@ -1,5 +1,5 @@
 <template>
-  <router-link class="txt-cs-6" :to="{ name: 'Vault', params: { id: vault.id } }" :title="vault.name" :aria-label="'Open Vault' + vault.name">
+  <router-link class="txt-cs-6" :to="{ name: 'Vault', params: { id: vault.id } }" :title="vault.name">
     <div class="vault-card-container">
       
       <div class="vault-card fill elevation-3">
@@ -51,6 +51,9 @@ import { Vault } from '../models/Vault'
   height: 11rem;
   margin-bottom: 0;
 }
+.vault-card-container:hover .info-container{
+  padding: 0.5rem 0.5rem 1.6rem 0.5rem;
+}
 .vault-card{
   border-radius: 0.5rem;
   overflow: hidden;
@@ -62,6 +65,7 @@ import { Vault } from '../models/Vault'
   object-fit: cover;
 }
 .info-container{
+  transition: all 100ms ease-in-out;
   position: absolute;
   z-index: 1;
   height: 100%;

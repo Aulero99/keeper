@@ -1,8 +1,7 @@
 <template>
   <div class="keep-card-container">
     <div class="keep-card fill elevation-3" 
-    type="button" 
-    :aria-label="'View Details of Keep' + keep.name"
+    type="button"
     @click="openModal(keep.id)">
       
       <div class="img-container fill">

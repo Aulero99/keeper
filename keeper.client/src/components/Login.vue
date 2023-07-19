@@ -7,7 +7,7 @@
             </div>
 
             <div class="options elevation-3">
-              <router-link :to="{ name: 'Account' }" class="fill" aria-label="Link to Account Page">
+              <router-link :to="{ name: 'Account' }" class="fill">
               <div class="drop-link">
                   Account Page
                 </div>
@@ -17,7 +17,7 @@
               type="button" 
               @click="logout()" 
               title="logout"
-              aria-label="Logout From Account">
+              >
                 Logout
               </div>
             </div>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="link fill-y" v-else>
-          <div class="button" type="button" @click="login()" aria-label="Login to Account">
+          <div class="button" type="button" @click="login()">
             Login
           </div>
         </div>

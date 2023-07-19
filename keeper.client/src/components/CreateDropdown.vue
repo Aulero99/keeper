@@ -6,10 +6,10 @@
             </div>
         </div>
         <div class="dropdown-content elevation-3">
-            <div type="button" class="drop-link" @click="newKeep()" aria-label="Create New Keep">
+            <div type="button" class="drop-link" @click="newKeep()">
                 New Keep
             </div>
-            <div type="button" class="drop-link" @click="newVault()" aria-label="Create New Vault">
+            <div type="button" class="drop-link" @click="newVault()">
                 New Vault
             </div>
         </div>
