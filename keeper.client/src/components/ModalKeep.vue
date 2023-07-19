@@ -187,7 +187,7 @@ import { Modal } from 'bootstrap'
   align-items: center;
 }
 .creator img {
-    height: 2rem;
+    height: var(--avatar-sm-size);
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 50%;

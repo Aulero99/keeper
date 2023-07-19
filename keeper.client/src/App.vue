@@ -46,10 +46,6 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
-:root{
-  --main-height: calc(100vh - 32px - 64px);
-  --nav-h: 4rem;
-}
 nav{
   width: 100%;
   position: fixed;
