@@ -4,7 +4,7 @@
     class="keep-card fill elevation-3" 
     @click="openModal(keep.id)">
       
-      <div class="img-container fill-x">
+      <div class="img-container fill">
         <img :src="keep.img" :alt="keep.name">
       </div>
   
@@ -67,34 +67,20 @@ import { AppState } from '../AppState'
 <style lang="scss" scoped>
 .keep-card-container{
   max-height: 450px;
+  position: relative;
 }
 .keep-card{
   background-color: var(--cs-1);
   position: relative;
   overflow: hidden;
   border-radius: 0.5rem;
-  transition: all var(--ease);
   cursor: pointer;
-    &:hover{ 
-      .info-container{
-        padding: 0.5rem 0.5rem 1rem 0.5rem;
-      }
-      .img-container img{
-        // width: calc(100% + 1rem);
-        // margin-left: -0.5rem;
-      }
+    &:hover .info-container{
+      padding: 0.5rem 0.5rem 0.75rem 0.5rem;
     }
 }
-.img-container{
-  position: relative;
-  overflow: hidden;
-    img{
-      transition: all var(--ease);
-      width: 100%;
-      height: max-content;
-      margin-left: 0;
-      margin-top: 0;
-    }
+.img-container img{
+  width: 100%;
 }
 .info-container{
   position: absolute;
