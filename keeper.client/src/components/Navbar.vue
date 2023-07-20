@@ -8,14 +8,12 @@
               Home
             </router-link>
           </div>
-          <CreateDropdown/>      
+          <CreateDropdown v-if="user.isAuthenticated"/>      
       </div>
         
       <div class="fill-y nav-section order-1 order-sm-2">
         <router-link class="navbar-brand d-flex flex-row justify-content-start justify-content-sm-center align-items-start fill" :to="{ name: 'Home' }">
-          <div class="d-flex flex-column align-items-center fill-y">
-            <img alt="logo" src="../assets/img/logo.svg" class="fill-y" title="the keepr co."/>
-          </div>
+          <Logo title="home"/>
         </router-link>
       </div>
         
@@ -29,11 +27,13 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import Login from './Login.vue';
+import { AppState } from '../AppState';
 export default {
   setup() {
     return {
-
+      user: computed(()=>AppState.user)
     }
   },
   components: { Login }

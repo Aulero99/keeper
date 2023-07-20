@@ -1,41 +1,37 @@
 <template>
-  <section class="row mt-4" v-if="account?.id">
+  <section class="row mt-4 py-2" v-if="account?.id">
     <ProfileCard :profile="account"/>
   </section>
   
-  <section class="row">
+  <section class="row" v-if="account?.id">
     <div class="col-12 text-center">
       {{ myVaults.length }} Vaults | {{ keeps.length }} Keeps
     </div>
   </section>
   
-  <section class="row mt-4">
+  <section class="row mt-4" v-if="account?.id">
     <div class="col-12 overflow-hidden d-flex flex-row justify-content-center">
       <div class="limit-width">
-        <h2>Vaults</h2>
+        <h2 class="mb-2 p-0">Vaults</h2>
       </div>
     </div>
   </section>
 
-  <section class="row">
-    <div class="col-12 d-flex flex-row justify-content-center">
-      <div class="limit-width d-flex flex-row flex-wrap">
-        <div v-for="v in myVaults" :key="v.id" class="me-3 mb-3">
-          <VaultCard :vault="v"/>
-        </div>
-      </div>
-    </div>
-  </section>
+  <VaultsContainer :vaults="myVaults" v-if="account?.id"/>
   
-  <section class="row mt-4">
+  <section class="row mt-4" v-if="account?.id">
     <div class="col-12 d-flex flex-row justify-content-center">
       <div class="limit-width">
-        <h2>Keeps</h2>
+        <h2 class="p-0 mb-2">Keeps</h2>
       </div>
     </div>
   </section>
   
-  <KeepsContainer/>
+  <KeepsContainer v-if="keeps && account?.id"/>
+  
+  <section class="row mt-4" v-else>
+    <Loader/>
+  </section>
 </template>
 
 <script>
@@ -46,27 +42,18 @@ import { logger } from '../utils/Logger';
 import { accountService } from '../services/AccountService';
 export default {
   setup() {
-    // async function getVaultsByAccountId(){
-    //   try {
-    //     await accountService.getVaultsByAccountId()
-    //   } catch (error) {
-    //     logger.log(error, "getAccountVaults()")
-    //     Pop.error(error)
-    //   }
-    // }
 
     async function getKeepsByAccountId(){
       try {
-        await accountService.getKeepsByAccountId()
+        await accountService.getKeepsByAccountId();
       } catch (error) {
-        logger.log(error,"getKeepsByAccountId()")
-        Pop.error(error)
+        logger.log(error,"getKeepsByAccountId()");
+        Pop.error(error);
       }
     }
 
     onMounted(()=>{
-      // getVaultsByAccountId()
-      getKeepsByAccountId()
+      getKeepsByAccountId();
     })
     onUnmounted(()=>{
         AppState.keeps = []
@@ -81,7 +68,5 @@ export default {
 </script>
 
 <style scoped>
-img {
-  max-width: 100px;
-}
+img { max-width: 100px; }
 </style>

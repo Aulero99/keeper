@@ -52,7 +52,7 @@
           </form>
 
         <button class="btn btn-dark d-flex flex-row fill-x d-flex flex-row justify-content-center" 
-        v-if="activeVault"
+        v-if="activeVault && account.id == activeVault.creatorId"
         @click="removeKeepFromVault(keep.id)">
           Remove
         </button>
@@ -91,7 +91,8 @@ import { Modal } from 'bootstrap'
         editable,
         keep: computed(()=>AppState?.activeKeep),
         myVaults: computed(()=>AppState?.myVaults),
-        activeVault: computed(()=>AppState.activeVault),
+        activeVault: computed(()=>AppState?.activeVault),
+        account: computed(()=>AppState?.account),
 
         async addKeepToVault(){
           logger.log('adding keep to vault');

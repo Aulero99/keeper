@@ -1,8 +1,8 @@
 <template>
-  <router-link class="txt-cs-6" :to="{ name: 'Vault', params: { id: vault.id } }" :title="vault.name">
-    <div class="vault-card-container">
+  <div class="vault-card-container">
+      <router-link class="txt-cs-6 fill d-flex flex-row justify-content-center align-items-top" :to="{ name: 'Vault', params: { id: vault.id } }" :title="vault.name">
       
-      <div class="vault-card fill elevation-3">
+      <div class="vault-card elevation-3">
         <div class="img-container fill">
           <img :src="vault.img" :alt="vault.name" :title="vault.name">
         </div>
@@ -20,8 +20,8 @@
 
       </div>
 
+    </router-link>
     </div>
-  </router-link>
       
 </template>
   
@@ -42,20 +42,21 @@ import { Vault } from '../models/Vault'
 
 <style lang="scss" scoped>
 .vault-card-container{
-  width: 15rem;
-  height: 10rem;
-  transition: all var(--ease);
-  margin-bottom: 1rem;
-    &:hover{
-      height: 11rem;
-      margin-bottom: 0;
-        .info-container{ padding: 0.5rem 0.5rem 1.6rem 0.5rem; }
-    }
+  width: 100%;
+  aspect-ratio: 3/2;
 }
 .vault-card{
   border-radius: 0.5rem;
   overflow: hidden;
   position: relative;
+  width: 100%;
+  height: calc(100% - 1rem);
+  transition: all var(--ease);
+    &:hover{
+      margin-top: -0.5rem;
+      height: 100%;
+        .info-container{ padding: 0.5rem 0.5rem 1rem 0.5rem; }
+    }
 }
 .img-container img{
   width: 100%;

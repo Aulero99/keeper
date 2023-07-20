@@ -1,6 +1,6 @@
 <template>
   <section class="row" v-if="keeps.length > 0">
-    <div class="col-12 overflow-hidden d-flex flex-row justify-content-center">
+    <div class="col-12 overflow-x-hidden py-2 d-flex flex-row justify-content-center">
       <div class="limit-width">
         <div class="keeps-container">
           <div v-for="k in keeps" :key="k.id" class="keep-slot">
