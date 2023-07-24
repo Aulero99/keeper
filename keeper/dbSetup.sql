@@ -1,3 +1,4 @@
+-- Active: 1690221004246@@52.37.83.226@3306@keepr
 DROP Table IF EXISTS vaultKeeps, vaults, keeps;
 DROP TABLE IF EXISTS accounts;
 
@@ -46,3 +47,23 @@ CREATE TABLE IF NOT EXISTS vaultKeeps(
   FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+
+SELECT 
+k.*, 
+a.*,
+COUNT(v.id) AS Kept
+FROM keeps k 
+JOIN accounts a ON a.id = k.CreatorId
+LEFT JOIN vaultKeeps v ON v.keepId = k.id
+WHERE k.id = LAST_INSERT_ID();
+
+
+SELECT 
+k.*, 
+COUNT(v.id) AS Kept,
+a.*
+FROM keeps k 
+LEFT JOIN vaultKeeps v ON v.keepId = k.id
+LEFT JOIN accounts a ON k.CreatorId = a.id
+WHERE k.id = LAST_INSERT_ID()
+GROUP BY (k.id);

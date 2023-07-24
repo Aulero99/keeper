@@ -102,21 +102,23 @@ namespace keeper.Repositories
             (Name, Description, Img, CreatorId)
             VALUES
             (@Name, @Description, @Img, @CreatorId);
-            
+
             SELECT 
             k.*, 
-            a.*,
-            COUNT(v.id) AS Kept
+            COUNT(v.id) AS Kept,
+            a.*
             FROM keeps k 
-            JOIN accounts a ON a.id = k.CreatorId
             LEFT JOIN vaultKeeps v ON v.keepId = k.id
+            LEFT JOIN accounts a ON k.CreatorId = a.id
             WHERE k.id = LAST_INSERT_ID()
+            GROUP BY (k.id);
             ;";
 
-            return _db.Query<Keep, Profile, Keep>(sql, (k,p)=>{
+            var keep = _db.Query<Keep, Profile, Keep>(sql, (k,p)=>{
                 k.Creator = p;
                 return k;
             }, data).FirstOrDefault();
+            return keep;
         }
     }
 }

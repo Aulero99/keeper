@@ -37,7 +37,7 @@
         
         <div class="foot-section flex-grow-1 pe-2">
           <form @submit.prevent="addKeepToVault()" 
-            v-if="myVaults?.length > 1 && !activeVault"
+            v-if="myVaults?.length > 0 && !activeVault"
             class="d-flex flex-row">
               <label for="vaults" class="d-none">Vaults</label>
               <select name="vaults" v-model="editable.vaultId" class="form-select">
