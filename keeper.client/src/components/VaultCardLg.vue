@@ -12,7 +12,7 @@
             </div>
           </div>
           
-          <DeleteButton @click="deleteVault(vault.id)" class="delete-button" title="Delete This Vault"/>
+          <DeleteButton @click="deleteVault(vault.id)" class="delete-button" title="Delete This Vault" v-if="vault.creatorId == account.id"/>
         
         </div>
       </div>
@@ -25,7 +25,13 @@
 </template>
   
 <script>
+import { computed } from 'vue'
 import { Vault } from '../models/Vault'
+import { AppState } from '../AppState'
+import Pop from '../utils/Pop'
+import { logger } from '../utils/Logger'
+import { vaultsService } from '../services/VaultsService'
+import { router } from '../router'
   export default {
     props:{ 
         vault: { type: Vault, required: true },
@@ -33,10 +39,22 @@ import { Vault } from '../models/Vault'
     },
     
     setup() {
-      
+
       
         return {
-  
+          account: computed(()=> AppState.account),
+
+          async deleteVault(id){
+            try {
+              if(await Pop.confirm("Are you sure you want to delete this vault?")){
+                await vaultsService.deleteVault(id)
+                router.push('/')
+              }
+            } catch (error) {
+              logger.log(error)
+              Pop.error(error)
+            }
+          }
       }
     }
   }
